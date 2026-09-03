@@ -1,7 +1,9 @@
 package com.lucas.Tipmanager.controller;
 
+import com.lucas.Tipmanager.dto.EmployeeRequestDTO;
 import com.lucas.Tipmanager.entity.Employee;
 import com.lucas.Tipmanager.service.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,5 +14,11 @@ public class EmployeeController {
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee create(@RequestBody EmployeeRequestDTO data) {
+        return employeeService.create(data);
     }
 }
