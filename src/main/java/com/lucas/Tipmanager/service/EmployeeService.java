@@ -4,6 +4,7 @@ import com.lucas.Tipmanager.dto.EmployeeRequestDTO;
 import com.lucas.Tipmanager.entity.Employee;
 import com.lucas.Tipmanager.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -23,5 +24,9 @@ public class EmployeeService {
 
     public List<Employee> getAll() {
         return employeeRepository.findAll();
+    }
+
+    public Employee getById(Long id) {
+        return employeeRepository.findById(id).orElse(null);
     }
 }
