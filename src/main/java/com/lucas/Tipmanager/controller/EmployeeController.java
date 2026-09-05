@@ -6,6 +6,8 @@ import com.lucas.Tipmanager.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -20,5 +22,10 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody EmployeeRequestDTO data) {
         return employeeService.create(data);
+    }
+
+    @GetMapping
+    public List<Employee> getAll() {
+        return employeeService.getAll();
     }
 }
