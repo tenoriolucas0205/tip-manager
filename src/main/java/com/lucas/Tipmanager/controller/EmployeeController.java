@@ -6,6 +6,7 @@ import com.lucas.Tipmanager.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee create(@RequestBody EmployeeRequestDTO data) {
+    public Employee create(@Valid @RequestBody EmployeeRequestDTO data) {
         return employeeService.create(data);
     }
 
@@ -40,5 +41,13 @@ public class EmployeeController {
     public void delete(@PathVariable long id){
         employeeService.delete(id);
 
+    }
+
+    @PutMapping("/{id}")
+    public Employee update(
+            @PathVariable Long id,
+            @Valid @RequestBody EmployeeRequestDTO data
+    ) {
+        return employeeService.update(id, data);
     }
 }

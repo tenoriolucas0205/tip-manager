@@ -2,6 +2,7 @@ package com.lucas.Tipmanager.service;
 
 import com.lucas.Tipmanager.dto.EmployeeRequestDTO;
 import com.lucas.Tipmanager.entity.Employee;
+import com.lucas.Tipmanager.exception.EmployeeNotFoundException;
 import com.lucas.Tipmanager.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +28,19 @@ public class EmployeeService {
     }
 
     public Employee getById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         employeeRepository.deleteById(id);
     }
 
+    public Employee update(long id,EmployeeRequestDTO data){
+        Employee employee = getById (id);
+
+        employee.setName(data.getName());
+
+        return employeeRepository.save(employee);
+    }
 }

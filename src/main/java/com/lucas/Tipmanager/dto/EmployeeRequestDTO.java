@@ -1,7 +1,10 @@
 package com.lucas.Tipmanager.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class EmployeeRequestDTO {
 
+    @NotBlank
     private String name;
 
     public EmployeeRequestDTO() {
