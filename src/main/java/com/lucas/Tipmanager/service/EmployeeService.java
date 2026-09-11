@@ -43,4 +43,12 @@ public class EmployeeService {
 
         return employeeRepository.save(employee);
     }
+
+    public Employee updateStatus(Long id,Boolean active){
+        Employee employee = getById(id);
+
+        employee.setActive(active);
+
+        return employeeRepository.save(employee);
+    }
 }

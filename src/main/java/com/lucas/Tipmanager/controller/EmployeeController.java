@@ -50,4 +50,10 @@ public class EmployeeController {
     ) {
         return employeeService.update(id, data);
     }
+
+    @PatchMapping("/{id}/status")
+    public Employee updateStatus(@PathVariable Long id,@RequestParam Boolean active){
+
+        return employeeService.updateStatus(id,active);
+    }
 }
