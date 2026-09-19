@@ -14,11 +14,20 @@ public class EmployeeExceptionHandler {
     public String handleEmployeeNotFound(EmployeeNotFoundException exception) {
         return exception.getMessage();
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleValidationException(MethodArgumentNotValidException exception) {
         return exception.getBindingResult()
                 .getFieldError()
                 .getDefaultMessage();
+    }
+
+    @ExceptionHandler(WorkDayAlreadyClosedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleWorkDayAlreadyClosed(
+            WorkDayAlreadyClosedException exception
+    ) {
+        return exception.getMessage();
     }
 }

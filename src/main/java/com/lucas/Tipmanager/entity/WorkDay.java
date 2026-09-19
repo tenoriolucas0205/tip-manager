@@ -22,6 +22,8 @@ public class WorkDay {
 
     private BigDecimal carryOverOut;
 
+    private Boolean closed = false;
+
     public WorkDay() {
     }
 
@@ -53,6 +55,14 @@ public class WorkDay {
         this.carryOverIn = carryOverIn;
     }
 
+    public BigDecimal getKitchenAmount() {
+        return kitchenAmount;
+    }
+
+    public void setKitchenAmount(BigDecimal kitchenAmount) {
+        this.kitchenAmount = kitchenAmount;
+    }
+
     public BigDecimal getCarryOverOut() {
         return carryOverOut;
     }
@@ -61,11 +71,11 @@ public class WorkDay {
         this.carryOverOut = carryOverOut;
     }
 
-    public BigDecimal getKitchenAmount() {
-        return kitchenAmount;
+    public Boolean getClosed() {
+        return closed;
     }
 
-    public void setKitchenAmount(BigDecimal kitchenAmount) {
-        this.kitchenAmount = kitchenAmount;
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
     }
 }
