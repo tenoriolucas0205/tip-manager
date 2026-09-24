@@ -4,10 +4,14 @@ import com.lucas.Tipmanager.dto.WorkedDayRequestDTO;
 import com.lucas.Tipmanager.entity.Employee;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
+import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
+import com.lucas.Tipmanager.exception.WorkedDayAlreadyExistsException;
 import com.lucas.Tipmanager.repository.EmployeeRepository;
 import com.lucas.Tipmanager.repository.WorkDayRepository;
 import com.lucas.Tipmanager.repository.WorkedDayRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class WorkedDayService {
@@ -34,6 +38,25 @@ public class WorkedDayService {
         WorkDay workDay = workDayRepository.findById(data.getWorkDayId())
                 .orElseThrow();
 
+        if (Boolean.TRUE.equals(workDay.getClosed())) {
+            throw new WorkDayAlreadyClosedException(
+                    data.getWorkDayId()
+            );
+        }
+
+        boolean alreadyExists =
+                workedDayRepository.existsByEmployeeIdAndWorkDayId(
+                        data.getEmployeeId(),
+                        data.getWorkDayId()
+                );
+
+        if (alreadyExists) {
+            throw new WorkedDayAlreadyExistsException(
+                    data.getEmployeeId(),
+                    data.getWorkDayId()
+            );
+        }
+
         WorkedDay workedDay = new WorkedDay();
 
         workedDay.setEmployee(employee);
@@ -42,8 +65,15 @@ public class WorkedDayService {
         return workedDayRepository.save(workedDay);
     }
 
-    public int countEmployeesByWorkDay(Long workDayId) {
+    public List<WorkedDay> getAll() {
+        return workedDayRepository.findAll();
+    }
 
+    public List<WorkedDay> getByWorkDay(Long workDayId) {
+        return workedDayRepository.findByWorkDayId(workDayId);
+    }
+
+    public int countEmployeesByWorkDay(Long workDayId) {
         return workedDayRepository.findByWorkDayId(workDayId).size();
     }
 }

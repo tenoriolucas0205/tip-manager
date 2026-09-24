@@ -8,4 +8,9 @@ import java.util.List;
 public interface WorkedDayRepository extends JpaRepository<WorkedDay, Long> {
 
     List<WorkedDay> findByWorkDayId(Long workDayId);
+
+    boolean existsByEmployeeIdAndWorkDayId(
+            Long employeeId,
+            Long workDayId
+    );
 }

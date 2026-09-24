@@ -6,6 +6,8 @@ import com.lucas.Tipmanager.service.WorkDayService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/workdays")
 public class WorkDayController {
@@ -20,6 +22,11 @@ public class WorkDayController {
     @ResponseStatus(HttpStatus.CREATED)
     public WorkDay create(@RequestBody WorkDayRequestDTO data) {
         return workDayService.create(data);
+    }
+
+    @GetMapping
+    public List<WorkDay> getAll() {
+        return workDayService.getAll();
     }
 
     @PostMapping("/{id}/close")

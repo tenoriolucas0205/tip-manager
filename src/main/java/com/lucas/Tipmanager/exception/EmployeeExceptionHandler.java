@@ -30,4 +30,12 @@ public class EmployeeExceptionHandler {
     ) {
         return exception.getMessage();
     }
+
+    @ExceptionHandler(WorkedDayAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleWorkedDayAlreadyExists(
+            WorkedDayAlreadyExistsException exception
+    ) {
+        return exception.getMessage();
+    }
 }
