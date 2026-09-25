@@ -1,6 +1,7 @@
 package com.lucas.Tipmanager.controller;
 
 import com.lucas.Tipmanager.dto.WorkDayRequestDTO;
+import com.lucas.Tipmanager.dto.WorkDayResponseDTO;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.service.WorkDayService;
 import jakarta.validation.Valid;
@@ -21,19 +22,28 @@ public class WorkDayController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WorkDay create(
+    public WorkDayResponseDTO create(
             @Valid @RequestBody WorkDayRequestDTO data
     ) {
-        return workDayService.create(data);
+        WorkDay workDay = workDayService.create(data);
+
+        return new WorkDayResponseDTO(workDay);
     }
 
     @GetMapping
-    public List<WorkDay> getAll() {
-        return workDayService.getAll();
+    public List<WorkDayResponseDTO> getAll() {
+
+        return workDayService.getAll()
+                .stream()
+                .map(WorkDayResponseDTO::new)
+                .toList();
     }
 
     @PostMapping("/{id}/close")
-    public WorkDay close(@PathVariable Long id) {
-        return workDayService.close(id);
+    public WorkDayResponseDTO close(@PathVariable Long id) {
+
+        WorkDay workDay = workDayService.close(id);
+
+        return new WorkDayResponseDTO(workDay);
     }
 }

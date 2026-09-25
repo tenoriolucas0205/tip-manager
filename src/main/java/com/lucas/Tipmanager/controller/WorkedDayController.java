@@ -1,6 +1,7 @@
 package com.lucas.Tipmanager.controller;
 
 import com.lucas.Tipmanager.dto.WorkedDayRequestDTO;
+import com.lucas.Tipmanager.dto.WorkedDayResponseDTO;
 import com.lucas.Tipmanager.entity.WorkedDay;
 import com.lucas.Tipmanager.service.WorkedDayService;
 import org.springframework.http.HttpStatus;
@@ -21,18 +22,32 @@ public class WorkedDayController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WorkedDay create(@RequestBody WorkedDayRequestDTO data) {
-        return workedDayService.create(data);
+    public WorkedDayResponseDTO create(
+            @RequestBody WorkedDayRequestDTO data
+    ) {
+        WorkedDay workedDay = workedDayService.create(data);
+
+        return new WorkedDayResponseDTO(workedDay);
     }
 
     @GetMapping
-    public List<WorkedDay> getAll() {
-        return workedDayService.getAll();
+    public List<WorkedDayResponseDTO> getAll() {
+
+        return workedDayService.getAll()
+                .stream()
+                .map(WorkedDayResponseDTO::new)
+                .toList();
     }
 
     @GetMapping("/workday/{workDayId}")
-    public List<WorkedDay> getByWorkDay(@PathVariable Long workDayId) {
-        return workedDayService.getByWorkDay(workDayId);
+    public List<WorkedDayResponseDTO> getByWorkDay(
+            @PathVariable Long workDayId
+    ) {
+
+        return workedDayService.getByWorkDay(workDayId)
+                .stream()
+                .map(WorkedDayResponseDTO::new)
+                .toList();
     }
 
     @GetMapping("/monthly/{employeeId}")
