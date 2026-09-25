@@ -14,6 +14,8 @@ import com.lucas.Tipmanager.repository.WorkDayRepository;
 import com.lucas.Tipmanager.repository.WorkedDayRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -88,5 +90,34 @@ public class WorkedDayService {
 
     public int countEmployeesByWorkDay(Long workDayId) {
         return workedDayRepository.findByWorkDayId(workDayId).size();
+    }
+
+    public BigDecimal getMonthlyTotal(
+            Long employeeId,
+            int year,
+            int month
+    ) {
+
+        employeeRepository.findById(employeeId)
+                .orElseThrow(() ->
+                        new EmployeeNotFoundException(employeeId)
+                );
+
+        LocalDate startDate = LocalDate.of(year, month, 1);
+
+        LocalDate endDate = startDate
+                .withDayOfMonth(startDate.lengthOfMonth());
+
+        List<WorkedDay> workedDays =
+                workedDayRepository.findByEmployeeIdAndWorkDay_DateBetween(
+                        employeeId,
+                        startDate,
+                        endDate
+                );
+
+        return workedDays.stream()
+                .map(WorkedDay::getAmountReceived)
+                .filter(amount -> amount != null)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

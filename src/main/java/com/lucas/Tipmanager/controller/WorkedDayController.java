@@ -6,6 +6,7 @@ import com.lucas.Tipmanager.service.WorkedDayService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -32,5 +33,18 @@ public class WorkedDayController {
     @GetMapping("/workday/{workDayId}")
     public List<WorkedDay> getByWorkDay(@PathVariable Long workDayId) {
         return workedDayService.getByWorkDay(workDayId);
+    }
+
+    @GetMapping("/monthly/{employeeId}")
+    public BigDecimal getMonthlyTotal(
+            @PathVariable Long employeeId,
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        return workedDayService.getMonthlyTotal(
+                employeeId,
+                year,
+                month
+        );
     }
 }
