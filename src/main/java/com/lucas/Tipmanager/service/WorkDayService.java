@@ -3,6 +3,7 @@ package com.lucas.Tipmanager.service;
 import com.lucas.Tipmanager.dto.WorkDayRequestDTO;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
+import com.lucas.Tipmanager.exception.NoEmployeesWorkedException;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyExistsException;
 import com.lucas.Tipmanager.exception.WorkDayNotFoundException;
@@ -82,6 +83,10 @@ public class WorkDayService {
                 workedDayRepository.findByWorkDayId(id);
 
         int employeeCount = workedDays.size();
+
+        if (employeeCount == 0) {
+            throw new NoEmployeesWorkedException(id);
+        }
 
         int totalShares = employeeCount + 2;
 

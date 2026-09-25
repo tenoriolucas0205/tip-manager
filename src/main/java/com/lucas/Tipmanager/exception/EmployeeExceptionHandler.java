@@ -60,4 +60,12 @@ public class EmployeeExceptionHandler {
     ) {
         return exception.getMessage();
     }
+
+    @ExceptionHandler(NoEmployeesWorkedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleNoEmployeesWorked(
+            NoEmployeesWorkedException exception
+    ) {
+        return exception.getMessage();
+    }
 }
