@@ -5,6 +5,7 @@ import com.lucas.Tipmanager.entity.Employee;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
 import com.lucas.Tipmanager.exception.EmployeeNotFoundException;
+import com.lucas.Tipmanager.exception.InactiveEmployeeException;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
 import com.lucas.Tipmanager.exception.WorkDayNotFoundException;
 import com.lucas.Tipmanager.exception.WorkedDayAlreadyExistsException;
@@ -38,6 +39,12 @@ public class WorkedDayService {
                 .orElseThrow(() ->
                         new EmployeeNotFoundException(data.getEmployeeId())
                 );
+
+        if (!Boolean.TRUE.equals(employee.getActive())) {
+            throw new InactiveEmployeeException(
+                    data.getEmployeeId()
+            );
+        }
 
         WorkDay workDay = workDayRepository.findById(data.getWorkDayId())
                 .orElseThrow(() ->

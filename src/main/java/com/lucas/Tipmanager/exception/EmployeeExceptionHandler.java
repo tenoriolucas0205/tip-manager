@@ -52,4 +52,12 @@ public class EmployeeExceptionHandler {
     ) {
         return exception.getMessage();
     }
+
+    @ExceptionHandler(InactiveEmployeeException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleInactiveEmployee(
+            InactiveEmployeeException exception
+    ) {
+        return exception.getMessage();
+    }
 }
