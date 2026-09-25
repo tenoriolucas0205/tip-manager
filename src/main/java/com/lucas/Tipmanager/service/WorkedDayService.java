@@ -4,7 +4,9 @@ import com.lucas.Tipmanager.dto.WorkedDayRequestDTO;
 import com.lucas.Tipmanager.entity.Employee;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
+import com.lucas.Tipmanager.exception.EmployeeNotFoundException;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
+import com.lucas.Tipmanager.exception.WorkDayNotFoundException;
 import com.lucas.Tipmanager.exception.WorkedDayAlreadyExistsException;
 import com.lucas.Tipmanager.repository.EmployeeRepository;
 import com.lucas.Tipmanager.repository.WorkDayRepository;
@@ -33,10 +35,14 @@ public class WorkedDayService {
     public WorkedDay create(WorkedDayRequestDTO data) {
 
         Employee employee = employeeRepository.findById(data.getEmployeeId())
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new EmployeeNotFoundException(data.getEmployeeId())
+                );
 
         WorkDay workDay = workDayRepository.findById(data.getWorkDayId())
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new WorkDayNotFoundException(data.getWorkDayId())
+                );
 
         if (Boolean.TRUE.equals(workDay.getClosed())) {
             throw new WorkDayAlreadyClosedException(

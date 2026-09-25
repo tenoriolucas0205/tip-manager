@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface WorkDayRepository extends JpaRepository<WorkDay, Long> {
 
     Optional<WorkDay> findTopByOrderByDateDesc();
+
+    boolean existsByDate(java.time.LocalDate date);
 }

@@ -1,12 +1,18 @@
 package com.lucas.Tipmanager.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class WorkDayRequestDTO {
 
+    @NotNull
     private LocalDate date;
 
+    @NotNull
+    @PositiveOrZero
     private BigDecimal totalTip;
 
     public WorkDayRequestDTO() {

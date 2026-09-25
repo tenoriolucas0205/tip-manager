@@ -15,6 +15,12 @@ public class EmployeeExceptionHandler {
         return exception.getMessage();
     }
 
+    @ExceptionHandler(WorkDayNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleWorkDayNotFound(WorkDayNotFoundException exception) {
+        return exception.getMessage();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleValidationException(MethodArgumentNotValidException exception) {
@@ -35,6 +41,14 @@ public class EmployeeExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleWorkedDayAlreadyExists(
             WorkedDayAlreadyExistsException exception
+    ) {
+        return exception.getMessage();
+    }
+
+    @ExceptionHandler(WorkDayAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleWorkDayAlreadyExists(
+            WorkDayAlreadyExistsException exception
     ) {
         return exception.getMessage();
     }

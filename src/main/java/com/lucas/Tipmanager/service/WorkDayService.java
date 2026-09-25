@@ -4,6 +4,8 @@ import com.lucas.Tipmanager.dto.WorkDayRequestDTO;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
+import com.lucas.Tipmanager.exception.WorkDayAlreadyExistsException;
+import com.lucas.Tipmanager.exception.WorkDayNotFoundException;
 import com.lucas.Tipmanager.repository.WorkDayRepository;
 import com.lucas.Tipmanager.repository.WorkedDayRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,15 @@ public class WorkDayService {
     }
 
     public WorkDay create(WorkDayRequestDTO data) {
+
+        boolean alreadyExists =
+                workDayRepository.existsByDate(data.getDate());
+
+        if (alreadyExists) {
+            throw new WorkDayAlreadyExistsException(
+                    data.getDate().toString()
+            );
+        }
 
         WorkDay workDay = new WorkDay();
 
@@ -54,10 +65,14 @@ public class WorkDayService {
         return workDayRepository.save(workDay);
     }
 
+    public List<WorkDay> getAll() {
+        return workDayRepository.findAll();
+    }
+
     public WorkDay close(Long id) {
 
         WorkDay workDay = workDayRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new WorkDayNotFoundException(id));
 
         if (Boolean.TRUE.equals(workDay.getClosed())) {
             throw new WorkDayAlreadyClosedException(id);
@@ -107,9 +122,5 @@ public class WorkDayService {
         workDay.setClosed(true);
 
         return workDayRepository.save(workDay);
-    }
-
-    public List<WorkDay> getAll() {
-        return workDayRepository.findAll();
     }
 }

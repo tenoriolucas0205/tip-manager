@@ -3,6 +3,7 @@ package com.lucas.Tipmanager.controller;
 import com.lucas.Tipmanager.dto.WorkDayRequestDTO;
 import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.service.WorkDayService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,9 @@ public class WorkDayController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WorkDay create(@RequestBody WorkDayRequestDTO data) {
+    public WorkDay create(
+            @Valid @RequestBody WorkDayRequestDTO data
+    ) {
         return workDayService.create(data);
     }
 
