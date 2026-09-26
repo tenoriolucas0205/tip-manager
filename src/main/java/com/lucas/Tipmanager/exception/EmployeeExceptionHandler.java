@@ -98,4 +98,15 @@ public class EmployeeExceptionHandler {
                 exception.getMessage()
         );
     }
+
+    @ExceptionHandler(InvalidMonthException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidMonth(
+            InvalidMonthException exception
+    ) {
+        return new ErrorResponse(
+                400,
+                exception.getMessage()
+        );
+    }
 }

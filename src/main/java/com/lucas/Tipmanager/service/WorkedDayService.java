@@ -6,6 +6,7 @@ import com.lucas.Tipmanager.entity.WorkDay;
 import com.lucas.Tipmanager.entity.WorkedDay;
 import com.lucas.Tipmanager.exception.EmployeeNotFoundException;
 import com.lucas.Tipmanager.exception.InactiveEmployeeException;
+import com.lucas.Tipmanager.exception.InvalidMonthException;
 import com.lucas.Tipmanager.exception.WorkDayAlreadyClosedException;
 import com.lucas.Tipmanager.exception.WorkDayNotFoundException;
 import com.lucas.Tipmanager.exception.WorkedDayAlreadyExistsException;
@@ -97,6 +98,10 @@ public class WorkedDayService {
             int year,
             int month
     ) {
+
+        if (month < 1 || month > 12) {
+            throw new InvalidMonthException(month);
+        }
 
         employeeRepository.findById(employeeId)
                 .orElseThrow(() ->

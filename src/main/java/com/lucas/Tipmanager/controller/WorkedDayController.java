@@ -6,6 +6,7 @@ import com.lucas.Tipmanager.entity.WorkedDay;
 import com.lucas.Tipmanager.service.WorkedDayService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +24,7 @@ public class WorkedDayController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public WorkedDayResponseDTO create(
-            @RequestBody WorkedDayRequestDTO data
+            @Valid @RequestBody WorkedDayRequestDTO data
     ) {
         WorkedDay workedDay = workedDayService.create(data);
 

@@ -1,9 +1,13 @@
 package com.lucas.Tipmanager.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class WorkedDayRequestDTO {
 
+    @NotNull
     private Long employeeId;
 
+    @NotNull
     private Long workDayId;
 
     public WorkedDayRequestDTO() {
