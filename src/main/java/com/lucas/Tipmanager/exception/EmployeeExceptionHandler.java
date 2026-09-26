@@ -11,61 +11,91 @@ public class EmployeeExceptionHandler {
 
     @ExceptionHandler(EmployeeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleEmployeeNotFound(EmployeeNotFoundException exception) {
-        return exception.getMessage();
+    public ErrorResponse handleEmployeeNotFound(
+            EmployeeNotFoundException exception
+    ) {
+        return new ErrorResponse(
+                404,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(WorkDayNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleWorkDayNotFound(WorkDayNotFoundException exception) {
-        return exception.getMessage();
+    public ErrorResponse handleWorkDayNotFound(
+            WorkDayNotFoundException exception
+    ) {
+        return new ErrorResponse(
+                404,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleValidationException(MethodArgumentNotValidException exception) {
-        return exception.getBindingResult()
-                .getFieldError()
-                .getDefaultMessage();
+    public ErrorResponse handleValidationException(
+            MethodArgumentNotValidException exception
+    ) {
+        return new ErrorResponse(
+                400,
+                exception.getBindingResult()
+                        .getFieldError()
+                        .getDefaultMessage()
+        );
     }
 
     @ExceptionHandler(WorkDayAlreadyClosedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleWorkDayAlreadyClosed(
+    public ErrorResponse handleWorkDayAlreadyClosed(
             WorkDayAlreadyClosedException exception
     ) {
-        return exception.getMessage();
+        return new ErrorResponse(
+                409,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(WorkedDayAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleWorkedDayAlreadyExists(
+    public ErrorResponse handleWorkedDayAlreadyExists(
             WorkedDayAlreadyExistsException exception
     ) {
-        return exception.getMessage();
+        return new ErrorResponse(
+                409,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(WorkDayAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleWorkDayAlreadyExists(
+    public ErrorResponse handleWorkDayAlreadyExists(
             WorkDayAlreadyExistsException exception
     ) {
-        return exception.getMessage();
+        return new ErrorResponse(
+                409,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(InactiveEmployeeException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleInactiveEmployee(
+    public ErrorResponse handleInactiveEmployee(
             InactiveEmployeeException exception
     ) {
-        return exception.getMessage();
+        return new ErrorResponse(
+                409,
+                exception.getMessage()
+        );
     }
 
     @ExceptionHandler(NoEmployeesWorkedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleNoEmployeesWorked(
+    public ErrorResponse handleNoEmployeesWorked(
             NoEmployeesWorkedException exception
     ) {
-        return exception.getMessage();
+        return new ErrorResponse(
+                409,
+                exception.getMessage()
+        );
     }
 }
